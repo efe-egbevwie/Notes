@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/database/todo_item.dart';
+import 'package:todolist/database/notesPage.dart';
 
 import 'database/db.dart';
 
@@ -35,7 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<ToDoItem> _todo = [];
+  List<Note> _todo = [];
 
   List<Widget> get _todoItems =>
       _todo.map((item) => toDoItemWidget(item)).toList();
@@ -44,12 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
-  Widget toDoItemWidget(ToDoItem item) {
+  Widget toDoItemWidget(Note item) {
     return Padding(
         padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
         child: Dismissible(
           onDismissed: (DismissDirection d) {
-            DB.delete(ToDoItem.table, item);
+            DB.delete(Note.table, item);
             showSnackBar('Task Deleted');
             refreshToDoList();
           },
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: Text(item.name,
+                  child: Text(item.description,
                       style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
               ],
@@ -126,8 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void refreshToDoList() async {
     List<Map<String, dynamic>> _currentTodoItems =
-    await DB.query(ToDoItem.table);
-    _todo = _currentTodoItems.map((item) => ToDoItem.fromMap(item)).toList();
+    await DB.query(Note.table);
+    _todo = _currentTodoItems.map((item) => Note.fromMap(item)).toList();
     setState(() {});
   }
 
@@ -140,8 +140,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _saveTask() async {
     showSnackBar('Task saved');
     Navigator.of(context).pop();
-    ToDoItem item = ToDoItem(name: _taskName);
-    await DB.insert(ToDoItem.table, item);
+    Note item = Note(description: _taskName);
+    await DB.create(Note.table, item);
     setState(() {});
     refreshToDoList();
   }
