@@ -1,6 +1,5 @@
 class Note {
 
-  static String table = 'todo';
 
   final int id;
   final String title;

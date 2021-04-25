@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/screens/notes_screen.dart';
+import 'package:todolist/service_locator.dart';
 import 'package:todolist/widgets/notesForm.dart';
 
 
 import 'database/db.dart';
 
 void main() async {
+  setUpLocator();
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
