@@ -50,18 +50,7 @@ class Note {
     'timeCreated': timeCreated.toIso8601String(),
   };
 
-  Map <String, dynamic> toMap () {
-    Map<String, dynamic> map = {
-    'name' : description
-    };
-    return map;
-  }
 
-  static Note fromMap (Map <String, dynamic> map) {
-    return Note(
-      id: map['id'],
-      description: map['name']
-    );
-  }
+
 
 }

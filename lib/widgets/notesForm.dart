@@ -1,11 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NotesForm extends StatefulWidget {
-  String title;
-  String description;
+  final String title;
+  final String description;
+  final ValueChanged<String> onTitleChanged;
+  final ValueChanged<String> onDescriptionChanged;
 
-  NotesForm({this.title, this.description});
+  const NotesForm({
+    Key key,
+    this.title = '',
+    this.description = '',
+    this.onTitleChanged,
+    this.onDescriptionChanged,
+  }) : super(key: key);
 
   @override
   _NotesFormState createState() => _NotesFormState();
@@ -18,7 +25,11 @@ class _NotesFormState extends State<NotesForm> {
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
-          children: [titleWidget(), SizedBox(height: 8), descriptionWidget()],
+          children: [
+            titleWidget(),
+            SizedBox(height: 8),
+            descriptionWidget(),
+          ],
         ),
       ),
     );
@@ -28,28 +39,28 @@ class _NotesFormState extends State<NotesForm> {
     return TextFormField(
       initialValue: widget.title,
       style: TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
       decoration: InputDecoration(
         hintText: 'Title',
-        hintStyle: TextStyle(color: Colors.white),
+        hintStyle: TextStyle(color: Colors.black),
         border: InputBorder.none,
       ),
       validator: (val) => val.isEmpty && val == null ? 'Enter a title' : null,
-      onChanged: (val) => setState(() => widget.title = val),
+      onChanged: widget.onTitleChanged,
     );
   }
 
   Widget descriptionWidget() {
     return TextFormField(
       initialValue: widget.description,
-      style: TextStyle(color: Colors.white, fontSize: 18),
+      style: TextStyle(color: Colors.black, fontSize: 18),
       decoration: InputDecoration(
           hintText: 'Description',
-          hintStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: Colors.black),
           border: InputBorder.none),
       validator: (val) =>
           val.isEmpty && val == null ? 'Enter a description' : null,
-      onChanged: (val) => setState(() => widget.description = val),
+      onChanged: widget.onDescriptionChanged,
     );
   }
 }

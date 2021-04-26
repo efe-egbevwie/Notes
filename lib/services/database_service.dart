@@ -3,7 +3,7 @@ import 'package:todolist/database/notes.dart';
 
 class DatabaseService{
 
-  Future createNotes(Note note) async{
+  Future createNote(Note note) async{
     return await DB.instance.create(note);
   }
 
@@ -12,11 +12,15 @@ class DatabaseService{
     return notes;
   }
 
-  Future updateNotes(Note note) async {
+  Future updateNote(Note note) async {
     return await DB.instance.update(note);
   }
 
   Future deleteNote(int id) async{
     return await DB.instance.delete(id);
+  }
+
+  Future closeDatabase() async{
+    return await DB.instance.closeDB();
   }
 }

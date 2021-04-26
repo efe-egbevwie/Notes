@@ -1,9 +1,7 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' ;
 import 'package:todolist/databaseConstants.dart';
 import 'dart:async';
-
-
 import 'notes.dart';
 
 class DB {
@@ -15,21 +13,22 @@ class DB {
 
   Future<Database> get database async {
     if (_database != null) return _database;
+
     _database = await _initDB('notes.db');
     return _database;
   }
 
-  Future<Database> _initDB(String fileName) async {
+  Future<Database> _initDB(String filePath) async {
     String _platformDatabasePath = await getDatabasesPath();
-    String _databasePath = p.join(_platformDatabasePath, 'todolist.db');
+    String _databasePath = join(_platformDatabasePath, filePath);
 
-    return _database = await openDatabase(_databasePath,
+    return await openDatabase(_databasePath,
         version: databaseVersion, onCreate: _createDB);
   }
 
-  Future<void> _createDB(Database db, int version) async {
+  Future _createDB(Database db, int version) async {
     await db.execute('''
-  CREATE TABLE $databaseTableName(
+  CREATE TABLE $databaseTableName (
   ${DatabaseColumnNames.id} INTEGER PRIMARY KEY AUTOINCREMENT,
   ${DatabaseColumnNames.title} TEXT NOT NULL,
   ${DatabaseColumnNames.description} TEXT NOT NULL,
@@ -44,8 +43,6 @@ class DB {
     db.close();
   }
 
-  static Future<List<Map<String, dynamic>>> query(String table) async =>
-      await _database.query(table);
 
   Future<Note> create(Note note) async {
     final db = await instance.database;
