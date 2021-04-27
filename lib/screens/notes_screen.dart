@@ -17,6 +17,7 @@ class _NotesScreenState extends State<NotesScreen> {
   bool isLoading = false;
   var databaseService = locator<DatabaseService>();
 
+
   @override
   void initState() {
     super.initState();
@@ -67,6 +68,7 @@ class _NotesScreenState extends State<NotesScreen> {
         onPressed: () async {
           await Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => EditNoteScreen()));
+          readNotes();
         },
       ),
     );
@@ -86,7 +88,7 @@ class _NotesScreenState extends State<NotesScreen> {
         return GestureDetector(
           onTap: () async {
             await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => NoteDetailScreen(),
+              builder: (context) => NoteDetailScreen(noteId: note.id,),
             ));
           },
           child: NotesCard(note: note, index: index),

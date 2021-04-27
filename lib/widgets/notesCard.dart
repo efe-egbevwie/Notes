@@ -39,6 +39,17 @@ class NotesCard extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
+            SizedBox(height: 5,),
+            Text(
+             note.description,
+             style: TextStyle(
+               color: Colors.black,
+               fontWeight: FontWeight.normal,
+               fontSize: 15
+             ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+            )
           ],
         ),
       ),

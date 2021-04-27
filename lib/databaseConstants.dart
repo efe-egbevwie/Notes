@@ -2,7 +2,7 @@ final String databaseTableName = 'notes';
 final int databaseVersion = 1;
 
  final List<String> databaseQueryParameters = [
-   'id', 'title', 'description', 'timeCreated'
+   '_id', 'title', 'description', 'timeCreated'
  ];
 
 class DatabaseColumnNames {

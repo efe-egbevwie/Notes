@@ -56,7 +56,7 @@ class DB {
 
     final mapOfNotes = await db.query(databaseTableName,
         columns: databaseQueryParameters,
-        where: '$DatabaseColumnNames.id = ?',
+        where: '${DatabaseColumnNames.id} = ?',
         whereArgs: [id]);
 
     if (mapOfNotes.isNotEmpty) {

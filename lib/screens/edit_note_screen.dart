@@ -39,7 +39,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
           title: title,
           description: description,
           onTitleChanged: (title) => setState(() => this.title = title),
-          onDescriptionChanged: (description) => (() => this.description = description),
+          onDescriptionChanged: (description) => setState(() => this.description = description),
         ),
       ),
     );

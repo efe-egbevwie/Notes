@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class NotesForm extends StatefulWidget {
@@ -47,13 +49,14 @@ class _NotesFormState extends State<NotesForm> {
       ),
       validator: (val) => val.isEmpty && val == null ? 'Enter a title' : null,
       onChanged: widget.onTitleChanged,
+      maxLines: 2,
     );
   }
 
   Widget descriptionWidget() {
     return TextFormField(
       initialValue: widget.description,
-      style: TextStyle(color: Colors.black, fontSize: 18),
+      style: TextStyle(color: Colors.black, fontSize: 18, ),
       decoration: InputDecoration(
           hintText: 'Description',
           hintStyle: TextStyle(color: Colors.black),
@@ -61,6 +64,8 @@ class _NotesFormState extends State<NotesForm> {
       validator: (val) =>
           val.isEmpty && val == null ? 'Enter a description' : null,
       onChanged: widget.onDescriptionChanged,
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:todolist/databaseConstants.dart';
+
 class Note {
 
 
@@ -36,18 +38,18 @@ class Note {
 
   static Note fromJson(Map<String, Object> json) {
     return Note(
-      id: json['id'] as int,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      timeCreated: DateTime.parse(json['timeCreated'] as String),
+      id: json[DatabaseColumnNames.id] as int,
+      title: json[DatabaseColumnNames.title] as String,
+      description: json[DatabaseColumnNames.description] as String,
+      timeCreated: DateTime.parse(json[DatabaseColumnNames.timeCreated] as String),
     );
   }
 
   Map<String, Object> toJson() => {
-   'id': id,
-    'title': title,
-    'description': description,
-    'timeCreated': timeCreated.toIso8601String(),
+   DatabaseColumnNames.id: id,
+    DatabaseColumnNames.title: title,
+    DatabaseColumnNames.description: description,
+    DatabaseColumnNames.timeCreated: timeCreated.toIso8601String(),
   };
 
 
