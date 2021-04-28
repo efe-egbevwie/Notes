@@ -80,7 +80,7 @@ class DB {
     return await db.update(
       databaseTableName,
       note.toJson(),
-      where: '$DatabaseColumnNames.id = ?',
+      where: '${DatabaseColumnNames.id} = ?',
       whereArgs: [note.id],
     );
   }
@@ -90,7 +90,7 @@ class DB {
 
     return await db.delete(
       databaseTableName,
-      where: '$DatabaseColumnNames.id = ?',
+      where: '${DatabaseColumnNames.id} = ?',
       whereArgs: [id],
     );
   }

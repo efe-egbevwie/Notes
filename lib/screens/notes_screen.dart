@@ -90,6 +90,7 @@ class _NotesScreenState extends State<NotesScreen> {
             await Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => NoteDetailScreen(noteId: note.id,),
             ));
+            readNotes();
           },
           child: NotesCard(note: note, index: index),
         );

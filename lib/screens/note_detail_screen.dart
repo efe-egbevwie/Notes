@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist/database/notes.dart';
+import 'package:todolist/screens/edit_note_screen.dart';
+import 'package:todolist/screens/notes_screen.dart';
 import 'package:todolist/services/database_service.dart';
 
 import '../service_locator.dart';
@@ -38,7 +40,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          editButton(),
+          deleteButton(),
+        ],
+      ),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -72,5 +79,52 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               ),
             ),
     );
+  }
+
+  Widget editButton() {
+    return IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: () async {
+        await Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => EditNoteScreen(
+                  note: note,
+                )));
+
+        readNote();
+      },
+    );
+  }
+
+  Widget deleteButton() {
+    return IconButton(
+      icon: Icon(Icons.delete),
+      onPressed: () {
+        _showDeleteNoteDialog();
+      },
+    );
+  }
+
+  void _showDeleteNoteDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Delete note?'),
+            content: Text('Are you sure you want to delete this note?'),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('No')),
+              TextButton(
+                  onPressed: () async {
+                    await databaseService.deleteNote(note.id);
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                  },
+                  child: Text('Yes')),
+            ],
+          );
+        });
   }
 }
