@@ -8,6 +8,7 @@ import 'package:todolist/services/database_service.dart';
 import 'package:todolist/widgets/notesCard.dart';
 
 class NotesScreen extends StatefulWidget {
+
   @override
   _NotesScreenState createState() => _NotesScreenState();
 }
@@ -24,10 +25,18 @@ class _NotesScreenState extends State<NotesScreen> {
     readNotes();
   }
 
+
+
   @override
   void dispose() {
     super.dispose();
-    databaseService.closeDatabase();
+
+  }
+
+  @override
+  void deactivate(){
+    super.deactivate();
+    //databaseService.closeDatabase();
   }
 
   Future readNotes() async {
@@ -73,6 +82,8 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
     );
   }
+
+
 
   Widget showNotes() {
     return StaggeredGridView.countBuilder(

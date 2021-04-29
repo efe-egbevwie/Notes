@@ -29,6 +29,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     super.initState();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
   Future readNote() async {
     setState(() => isLoading = true);
 
@@ -120,7 +125,10 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               TextButton(
                   onPressed: () async {
                     await databaseService.deleteNote(note.id);
-                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    //Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => NotesScreen()),
+                        (route) => false);
                   },
                   child: Text('Yes')),
             ],
