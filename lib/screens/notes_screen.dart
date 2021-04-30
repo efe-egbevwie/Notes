@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:todolist/database/notes.dart';
@@ -8,6 +9,8 @@ import 'package:todolist/services/database_service.dart';
 import 'package:todolist/widgets/notesCard.dart';
 
 class NotesScreen extends StatefulWidget {
+  bool isNoteDeleted = false;
+  NotesScreen({this.isNoteDeleted});
 
   @override
   _NotesScreenState createState() => _NotesScreenState();
@@ -24,6 +27,7 @@ class _NotesScreenState extends State<NotesScreen> {
     super.initState();
     readNotes();
   }
+
 
 
 
@@ -69,10 +73,10 @@ class _NotesScreenState extends State<NotesScreen> {
                 : showNotes(),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
         child: Icon(
           Icons.add,
           color: Theme.of(context).accentColor,
+
         ),
         onPressed: () async {
           await Navigator.of(context)

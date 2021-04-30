@@ -1,10 +1,8 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:todolist/screens/notes_screen.dart';
 import 'package:todolist/service_locator.dart';
-
-
-
-import 'database/db.dart';
 
 void main() async {
   setUpLocator();
@@ -12,20 +10,36 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
 
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Todo List',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Color.fromRGBO(58, 66, 86, 1.0),
+    return AdaptiveTheme(
+      light: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.blue,
         accentColor: Colors.white,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor:  Theme.of(context).primaryColor,
+        ),
+        iconTheme: IconThemeData(
+          color:  Colors.white,
+        )
       ),
-      home: NotesScreen(),
+      dark: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.grey[700],
+        scaffoldBackgroundColor: Colors.black,
+      ),
+      initial: AdaptiveThemeMode.dark,
+      builder: (theme, darkTheme) => MaterialApp(
+        title: 'Notes',
+        theme: theme,
+        darkTheme: darkTheme,
+        themeMode:ThemeMode.system ,
+        debugShowCheckedModeBanner: false,
+        home: NotesScreen(),
+      ),
     );
   }
 }
-
-
