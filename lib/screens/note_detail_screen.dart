@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todolist/database/notes.dart';
-import 'package:todolist/screens/edit_note_screen.dart';
-import 'package:todolist/screens/notes_screen.dart';
-import 'package:todolist/services/database_service.dart';
+import 'package:notes/database/notes.dart';
+import 'package:notes/services/database_service.dart';
 
 import '../service_locator.dart';
+import 'edit_note_screen.dart';
+import 'notes_screen.dart';
 
 class NoteDetailScreen extends StatefulWidget {
   final int noteId;

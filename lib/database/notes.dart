@@ -1,4 +1,6 @@
-import 'package:todolist/databaseConstants.dart';
+
+
+import '../databaseConstants.dart';
 
 class Note {
 

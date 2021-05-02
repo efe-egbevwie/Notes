@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:todolist/services/database_service.dart';
+import 'package:notes/services/database_service.dart';
+
 
 
 GetIt locator = GetIt.instance;

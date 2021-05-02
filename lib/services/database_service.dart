@@ -1,6 +1,7 @@
-import 'package:todolist/database/db.dart';
-import 'package:todolist/database/notes.dart';
 
+
+import 'package:notes/database/db.dart';
+import 'package:notes/database/notes.dart';
 
 class DatabaseService {
   Future createNote(Note note) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todolist/database/notes.dart';
+import 'package:notes/database/notes.dart';
+
 
 class NotesCard extends StatelessWidget {
   const NotesCard({

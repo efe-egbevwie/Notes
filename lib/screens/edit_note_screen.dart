@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/database/notes.dart';
-import 'package:todolist/services/database_service.dart';
-import 'package:todolist/widgets/notesForm.dart';
+import 'package:notes/database/notes.dart';
+import 'package:notes/services/database_service.dart';
+import 'package:notes/widgets/notesForm.dart';
 
 import '../service_locator.dart';
 

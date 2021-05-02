@@ -1,15 +1,12 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:todolist/database/notes.dart';
-import 'package:todolist/screens/edit_note_screen.dart';
-import 'package:todolist/screens/note_detail_screen.dart';
-import 'package:todolist/service_locator.dart';
-import 'package:todolist/services/database_service.dart';
-import 'package:todolist/services/database_service.dart';
-import 'package:todolist/widgets/notesCard.dart';
+import 'package:notes/database/notes.dart';
+import 'package:notes/services/database_service.dart';
+import 'package:notes/widgets/notesCard.dart';
 
 import '../service_locator.dart';
+import 'edit_note_screen.dart';
+import 'note_detail_screen.dart';
 
 class NotesScreen extends StatefulWidget {
   bool isNoteDeleted = false;
