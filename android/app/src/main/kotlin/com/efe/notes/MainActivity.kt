@@ -1,4 +1,4 @@
-package com.efe.todo.todolist
+package com.efe.notes
 
 import io.flutter.embedding.android.FlutterActivity
 

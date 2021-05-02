@@ -6,7 +6,10 @@ import 'package:todolist/screens/edit_note_screen.dart';
 import 'package:todolist/screens/note_detail_screen.dart';
 import 'package:todolist/service_locator.dart';
 import 'package:todolist/services/database_service.dart';
+import 'package:todolist/services/database_service.dart';
 import 'package:todolist/widgets/notesCard.dart';
+
+import '../service_locator.dart';
 
 class NotesScreen extends StatefulWidget {
   bool isNoteDeleted = false;

@@ -7,11 +7,22 @@ import 'package:todolist/service_locator.dart';
 void main() async {
   setUpLocator();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  final savedThemeMode = await AdaptiveTheme.getThemeMode();
+  runApp(MyApp(savedThemeMode: savedThemeMode,));
 }
 
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+   AdaptiveThemeMode savedThemeMode = AdaptiveThemeMode.dark;
+
+   MyApp({Key key, this.savedThemeMode}) : super(key: key);
+
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
@@ -31,7 +42,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.grey[700],
         scaffoldBackgroundColor: Colors.black,
       ),
-      initial: AdaptiveThemeMode.dark,
+      initial: widget.savedThemeMode ?? AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => MaterialApp(
         title: 'Notes',
         theme: theme,
