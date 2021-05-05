@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:notes/models/user.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -56,5 +57,13 @@ class Auth {
     } on FirebaseAuthException catch (e) {
       print(e.toString);
     }
+  }
+
+  Stream<NoteUser> get userStateChanges {
+    return _auth.authStateChanges().map(_userFromFirebase);
+  }
+
+  NoteUser _userFromFirebase(User user) {
+    return user != null ? NoteUser(uid: user.uid) : null;
   }
 }

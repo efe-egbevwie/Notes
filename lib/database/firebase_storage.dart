@@ -14,7 +14,7 @@ class FirebaseDatabase {
     await notesCollection
         .doc(uid)
         .collection(uid)
-        .doc(note.hashCode.toString())
+        .doc()
         .set(note.toJson())
         .catchError((error) => print('create note failed due to $error'));
   }
@@ -23,7 +23,7 @@ class FirebaseDatabase {
     await notesCollection
         .doc(uid)
         .collection(uid)
-        .doc(note.hashCode.toString())
+        .doc()
         .get()
         .then((DocumentSnapshot snapshot) {
       return Note.fromJson(snapshot.data());
@@ -34,7 +34,7 @@ class FirebaseDatabase {
     await notesCollection
         .doc(uid)
         .collection(uid)
-        .doc(note.hashCode.toString())
+        .doc()
         .update(note.toJson())
         .catchError((error) => print('update note failed due to $error'));
   }
@@ -43,18 +43,20 @@ class FirebaseDatabase {
     await notesCollection
         .doc(uid)
         .collection(uid)
-        .doc(note.hashCode.toString())
+        .doc()
         .delete()
         .catchError((error) => print('delete note failed due to $error'));
   }
 
-  Future<List<Note>> getNotes() {
-    var notes = notesCollection
+  Future<List<Note>> getNotes() async {
+    await notesCollection
         .doc(uid)
         .collection(uid)
-        .snapshots()
-        .map((noteSnapshot) => Note.fromJson(noteSnapshot.data()))
-        .toList();
-    return notes;
+        .get()
+        .then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((note) {
+        return Note.fromJson(note.data());
+      });
+    });
   }
 }
