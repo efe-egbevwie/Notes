@@ -2,6 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:notes/models/user.dart';
 import 'package:notes/service_locator.dart';
 import 'package:notes/services/firebase_auth_service.dart';
@@ -61,7 +62,7 @@ class _MyAppState extends State<MyApp> {
             scaffoldBackgroundColor: Colors.black,
           ),
           initial: widget.savedThemeMode ?? AdaptiveThemeMode.light,
-          builder: (theme, darkTheme) => MaterialApp(
+          builder: (theme, darkTheme) => GetMaterialApp(
             title: 'Notes',
             theme: theme,
             navigatorKey: locator<NavigationService>().navigationKey,

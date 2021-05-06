@@ -16,18 +16,15 @@ class AuthService extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       print(e.code);
       switch (e.code) {
-        case 'auth/email-already-exists':
-          authErrorMessage = 'Email already associated with an account';
+        case 'email-already-in-use':
+          authErrorMessage = 'Email already associated with an account. Sign in instead';
           break;
         case 'auth/invalid-email':
           authErrorMessage = 'Please enter a valid email';
           break;
-        case 'auth/invalid-password':
-          authErrorMessage = 'Invalid password';
-          break;
         default:
           {
-            authErrorMessage = 'An error has occurred please try again';
+            authErrorMessage = 'An error has occurred please review your credentials and try again';
           }
       }
     }
@@ -42,15 +39,15 @@ class AuthService extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       print(e.code);
       switch (e.code) {
-        case 'auth/invalid-email':
+        case 'user-not-found':
           authErrorMessage = 'Email not associated with an account';
           break;
-        case 'auth/invalid-password':
+        case 'wrong-password':
           authErrorMessage = 'Invalid password';
           break;
         default:
           {
-            authErrorMessage = 'An error has occurred please try again';
+            authErrorMessage = 'An error has occurred please review your credentials and try again';
           }
       }
     }

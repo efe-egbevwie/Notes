@@ -86,6 +86,8 @@ class _SignInVIewState extends State<SignInVIew> {
                                 buttonText: 'Sign In',
                                 onPressed: () {
                                   if (_formKey.currentState.validate()) {
+                                    FocusScope.of(context).unfocus();
+
                                     signInViewModel.signIn(
                                       email: emailController.text.trim(),
                                       password: passwordController.text.trim(),
