@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:notes/screens/login_screen.dart';
-import 'package:notes/widgets/roundButton.dart';
+import 'package:notes/ui/sign_in_view.dart';
+import 'package:notes/ui/widgets/roundButton.dart';
+import 'package:notes/viewModels/sign_up_viewModel.dart';
+import 'package:provider/provider.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen();
+class SignUpView extends StatefulWidget {
+  const SignUpView();
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _SignUpViewState createState() => _SignUpViewState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpViewState extends State<SignUpView> {
   final _formKey = GlobalKey<FormState>();
   bool obscurePassword = true;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final signUpViewModel = Provider.of<SignUpViewModel>(context);
     return Scaffold(
       body: Center(
         child: Container(
@@ -45,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           validator: (val) =>
                               val.isEmpty ? 'Please enter an email' : null,
-                          onChanged: (val) {},
+                          controller: emailController,
                         ),
                         SizedBox(
                           height: 20,
@@ -68,21 +73,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           validator: (val) => val.length < 6
                               ? 'Please input a password with 6 or more characters'
                               : null,
-                          onChanged: (val) {},
+                          controller: passwordController,
                         ),
                         SizedBox(
                           height: 30,
                         ),
-                        RoundButton(
-                          buttonText: 'Sign Up',
-                          onPressed: () {},
-                        ),
+                        signUpViewModel.isLoading
+                            ? CircularProgressIndicator(
+                                backgroundColor: Colors.blue,
+                              )
+                            : RoundButton(
+                                buttonText: 'Sign Up',
+                                onPressed: () {
+                                  if (_formKey.currentState.validate()) {
+                                    signUpViewModel.signUp(
+                                      email: emailController.text.trim(),
+                                      password: passwordController.text.trim(),
+                                    );
+                                  }
+                                },
+                              ),
                         RoundButton(
                           buttonText: 'Sign In',
                           onPressed: () {
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                    builder: (context) => LogInScreen()),
+                                    builder: (context) => SignInVIew()),
                                 (route) => false);
                           },
                         )

@@ -3,7 +3,7 @@
 import 'package:notes/database/db.dart';
 import 'package:notes/database/notes.dart';
 
-class DatabaseService {
+class SqliteDatabaseService {
   Future createNote(Note note) async {
     return await DB.instance.create(note);
   }

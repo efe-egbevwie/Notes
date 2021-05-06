@@ -1,6 +1,6 @@
 
 
-import '../databaseConstants.dart';
+import '../constants.dart';
 
 class Note {
 

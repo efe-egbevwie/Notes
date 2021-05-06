@@ -11,3 +11,9 @@ class DatabaseColumnNames {
   static final String description = 'description';
   static final String timeCreated = 'timeCreated';
 }
+
+class RouteNames {
+  static const String notesView = 'notesView';
+  static const String editNoteView = 'editNoteView';
+  static const String noteDetailView = 'noteDetailView';
+}

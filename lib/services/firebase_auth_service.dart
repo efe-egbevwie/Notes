@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:notes/models/user.dart';
 
-class Auth {
+class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String authErrorMessage;
@@ -10,9 +10,11 @@ class Auth {
   Future signUpWithEmailAndPassword(
       {@required String email, @required String password}) async {
     try {
-      var user = await _auth.createUserWithEmailAndPassword(
+      UserCredential user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      return user;
     } on FirebaseAuthException catch (e) {
+      print(e.code);
       switch (e.code) {
         case 'auth/email-already-exists':
           authErrorMessage = 'Email already associated with an account';
@@ -34,8 +36,11 @@ class Auth {
   Future signInWithEmailAndPassword(
       {@required String email, @required String password}) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential user = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return user;
     } on FirebaseAuthException catch (e) {
+      print(e.code);
       switch (e.code) {
         case 'auth/invalid-email':
           authErrorMessage = 'Email not associated with an account';
@@ -56,6 +61,9 @@ class Auth {
       await _auth.signOut();
     } on FirebaseAuthException catch (e) {
       print(e.toString);
+      return null;
+    } finally {
+      notifyListeners();
     }
   }
 
@@ -65,5 +73,11 @@ class Auth {
 
   NoteUser _userFromFirebase(User user) {
     return user != null ? NoteUser(uid: user.uid) : null;
+  }
+
+  static String getUid() {
+    final User user = FirebaseAuth.instance.currentUser;
+    final uid = user.uid;
+    return uid;
   }
 }

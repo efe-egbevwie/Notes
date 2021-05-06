@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:notes/database/notes.dart';
-import 'package:notes/services/database_service.dart';
-import 'package:notes/widgets/notesForm.dart';
+import 'package:notes/services/sqlite_database_service.dart';
+import 'package:notes/ui/widgets/notesForm.dart';
+
 
 import '../service_locator.dart';
 
-class EditNoteScreen extends StatefulWidget {
+class EditNoteView extends StatefulWidget {
   final Note note;
 
-  const EditNoteScreen({this.note});
+  const EditNoteView({this.note});
 
   @override
-  _EditNoteScreenState createState() => _EditNoteScreenState();
+  _EditNoteViewState createState() => _EditNoteViewState();
 }
 
-class _EditNoteScreenState extends State<EditNoteScreen> {
-  var databaseService = locator<DatabaseService>();
+class _EditNoteViewState extends State<EditNoteView> {
+  var databaseService = locator<SqliteDatabaseService>();
   final _formKey = GlobalKey<FormState>();
   String title;
   String description;

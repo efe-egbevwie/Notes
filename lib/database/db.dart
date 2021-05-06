@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' ;
 import 'dart:async';
-import '../databaseConstants.dart';
+import '../constants.dart';
 import 'notes.dart';
 
 class DB {

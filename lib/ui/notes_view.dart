@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
 import 'package:notes/database/notes.dart';
-import 'package:notes/services/database_service.dart';
-import 'package:notes/widgets/notesCard.dart';
+import 'package:notes/services/firebase_auth_service.dart';
+import 'package:notes/services/sqlite_database_service.dart';
+import 'package:notes/ui/widgets/notesCard.dart';
+
+
 
 import '../service_locator.dart';
-import 'edit_note_screen.dart';
-import 'note_detail_screen.dart';
+import 'edit_note_view.dart';
+import 'note_detail_view.dart';
 
-class NotesScreen extends StatefulWidget {
+class NotesView extends StatefulWidget {
   bool isNoteDeleted = false;
-  NotesScreen({this.isNoteDeleted});
+  NotesView({this.isNoteDeleted});
 
   @override
-  _NotesScreenState createState() => _NotesScreenState();
+  _NotesViewState createState() => _NotesViewState();
 }
 
-class _NotesScreenState extends State<NotesScreen> {
+class _NotesViewState extends State<NotesView> {
   List<Note> notes;
   bool isLoading = false;
-  var databaseService = locator<DatabaseService>();
+  var databaseService = locator<SqliteDatabaseService>();
+  var authService = locator<AuthService>();
 
 
   @override
@@ -55,6 +60,11 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(icon: Icon(Icons.logout), onPressed: () {
+            authService.signOut();
+          })
+        ],
         title: Center(
           child: Text(
             'Notes',
@@ -80,7 +90,7 @@ class _NotesScreenState extends State<NotesScreen> {
         ),
         onPressed: () async {
           await Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => EditNoteScreen()));
+              .push(MaterialPageRoute(builder: (context) => EditNoteView()));
           readNotes();
         },
       ),
@@ -103,7 +113,7 @@ class _NotesScreenState extends State<NotesScreen> {
         return GestureDetector(
           onTap: () async {
             await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => NoteDetailScreen(noteId: note.id,),
+              builder: (context) => NoteDetailView(noteId: note.id,),
             ));
             readNotes();
           },

@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:notes/database/notes.dart';
-import 'package:notes/services/database_service.dart';
+import 'package:notes/services/sqlite_database_service.dart';
 
 import '../service_locator.dart';
-import 'edit_note_screen.dart';
-import 'notes_screen.dart';
+import 'edit_note_view.dart';
+import 'notes_view.dart';
 
-class NoteDetailScreen extends StatefulWidget {
+class NoteDetailView extends StatefulWidget {
   final int noteId;
 
-  const NoteDetailScreen({
+  const NoteDetailView({
     @required this.noteId,
   });
 
   @override
-  _NoteDetailScreenState createState() => _NoteDetailScreenState();
+  _NoteDetailViewState createState() => _NoteDetailViewState();
 }
 
-class _NoteDetailScreenState extends State<NoteDetailScreen> {
+class _NoteDetailViewState extends State<NoteDetailView> {
   Note note;
   bool isLoading = false;
-  var databaseService = locator<DatabaseService>();
+  var databaseService = locator<SqliteDatabaseService>();
 
   @override
   void initState() {
@@ -91,7 +91,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       icon: Icon(Icons.edit),
       onPressed: () async {
         await Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => EditNoteScreen(
+            builder: (context) => EditNoteView(
                   note: note,
                 )));
 
@@ -127,7 +127,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                     await databaseService.deleteNote(note.id);
                     //Navigator.of(context).popUntil((route) => route.isFirst);
                     Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => NotesScreen()),
+                        MaterialPageRoute(builder: (context) => NotesView()),
                         (route) => false);
                   },
                   child: Text('Yes')),
