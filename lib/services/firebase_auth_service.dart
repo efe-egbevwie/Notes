@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:notes/models/user.dart';
@@ -17,14 +19,16 @@ class AuthService extends ChangeNotifier {
       print(e.code);
       switch (e.code) {
         case 'email-already-in-use':
-          authErrorMessage = 'Email already associated with an account. Sign in instead';
+          authErrorMessage =
+              'Email already associated with an account. Sign in instead';
           break;
         case 'auth/invalid-email':
           authErrorMessage = 'Please enter a valid email';
           break;
         default:
           {
-            authErrorMessage = 'An error has occurred please review your credentials and try again';
+            authErrorMessage =
+                'An error has occurred please review your credentials and try again';
           }
       }
     }
@@ -47,9 +51,13 @@ class AuthService extends ChangeNotifier {
           break;
         default:
           {
-            authErrorMessage = 'An error has occurred please review your credentials and try again';
+            authErrorMessage =
+                'An error has occurred please review your credentials and try again';
           }
       }
+    } on SocketException catch (e) {
+      print(e.toString());
+      authErrorMessage = 'Your Internet Connection is unavailable';
     }
   }
 
