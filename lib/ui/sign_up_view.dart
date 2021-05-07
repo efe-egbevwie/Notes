@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/ui/sign_in_view.dart';
-import 'package:notes/ui/widgets/roundButton.dart';
+import 'package:notes/constants.dart';
+import 'package:notes/service_locator.dart';
+import 'package:notes/services/navigation_service.dart';
 import 'package:notes/viewModels/sign_up_viewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -16,14 +18,24 @@ class _SignUpViewState extends State<SignUpView> {
   bool obscurePassword = true;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final NavigationService _navigationService = locator<NavigationService>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final signUpViewModel = Provider.of<SignUpViewModel>(context);
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Center(
         child: Container(
-          height: 400,
+          height: size.height * 0.6,
           margin: EdgeInsets.only(left: 20, right: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -31,7 +43,7 @@ class _SignUpViewState extends State<SignUpView> {
           ),
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 50.0),
+              padding: EdgeInsets.symmetric(horizontal: 50.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -41,6 +53,13 @@ class _SignUpViewState extends State<SignUpView> {
                     key: _formKey,
                     child: Column(
                       children: [
+                        Text(
+                          'Sign Up',
+                          style: TextStyle(
+                              fontSize: 23,
+                              color: Theme.of(context).primaryColor),
+                        ),
+                        SizedBox(height: 20),
                         TextFormField(
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.mail),
@@ -82,8 +101,13 @@ class _SignUpViewState extends State<SignUpView> {
                             ? CircularProgressIndicator(
                                 backgroundColor: Colors.blue,
                               )
-                            : RoundButton(
-                                buttonText: 'Sign Up',
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Theme.of(context).primaryColor,
+                                    minimumSize: Size(size.width * 0.8, 50),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30))),
                                 onPressed: () {
                                   if (_formKey.currentState.validate()) {
                                     FocusScope.of(context).unfocus();
@@ -94,15 +118,29 @@ class _SignUpViewState extends State<SignUpView> {
                                     );
                                   }
                                 },
+                                child: Text('Sign up'),
                               ),
-                        RoundButton(
-                          buttonText: 'Sign In',
+                        SizedBox(height: 12),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).accentColor,
+                            minimumSize: Size(size.width * 0.5, 50.0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                           onPressed: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (context) => SignInVIew()),
-                                (route) => false);
+                            _navigationService
+                                .pushReplacement(RouteNames.signInView);
                           },
+                          child: Text(
+                            'Sign in',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         )
                       ],
                     ),

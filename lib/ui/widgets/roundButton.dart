@@ -17,13 +17,16 @@ class RoundButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      //margin: EdgeInsets.symmetric(vertical: 3),
-      width: size.width * 0.8,
+      margin: EdgeInsets.symmetric(vertical: 4),
+    width: size.width * 0.8,
+      height: size.height * 0.08,
+
       child: ClipRRect(
         borderRadius: BorderRadius.circular(29),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Theme.of(context).primaryColor,
+            primary: buttonColor,
+            side: BorderSide(color: Theme.of(context).primaryColor,  )
 
           ),
           onPressed: onPressed,

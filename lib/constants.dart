@@ -16,4 +16,6 @@ class RouteNames {
   static const String notesView = 'notesView';
   static const String editNoteView = 'editNoteView';
   static const String noteDetailView = 'noteDetailView';
+  static const String signInView = 'signInView';
+  static const String signUpView = 'signUpView';
 }

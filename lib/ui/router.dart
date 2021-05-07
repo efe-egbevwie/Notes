@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:notes/ui/edit_note_view.dart';
 import 'package:notes/ui/note_detail_view.dart';
 import 'package:notes/ui/notes_view.dart';
+import 'package:notes/ui/sign_in_view.dart';
+import 'package:notes/ui/sign_up_view.dart';
 
 import '../constants.dart';
 
 class RouteGenerator {
-
   RouteGenerator._();
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -30,6 +31,18 @@ class RouteGenerator {
           viewToShow: NoteDetailView(
             noteId: settings.arguments,
           ),
+        );
+
+      case RouteNames.signInView:
+        return _materialPageRoute(
+          routeName: settings.name,
+          viewToShow: SignInVIew(),
+        );
+
+      case RouteNames.signUpView:
+        return _materialPageRoute(
+          routeName: settings.name,
+          viewToShow: SignUpView(),
         );
 
       default:
