@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' ;
 import 'dart:async';
 import '../constants.dart';
-import 'notes.dart';
+import '../models/sql_note.dart';
 
 class DB {
   DB._init();
@@ -29,7 +29,7 @@ class DB {
   Future _createDB(Database db, int version) async {
     await db.execute('''
   CREATE TABLE $databaseTableName (
-  ${DatabaseColumnNames.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+  ${DatabaseColumnNames.id} INTEGER PRIMARY KEY ,
   ${DatabaseColumnNames.title} TEXT NOT NULL,
   ${DatabaseColumnNames.description} TEXT NOT NULL,
   ${DatabaseColumnNames.timeCreated} TEXT NOT NULL

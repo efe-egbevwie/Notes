@@ -1,11 +1,13 @@
+import 'package:notes/models/sql_note.dart';
+
 abstract class Database{
-  Future createNote();
+  Future createNote(Note note);
 
   Future readNotes();
 
-  Future readNoteSingle();
+  Future readNoteSingle(int id);
 
-  Future updateNote();
+  Future updateNote(Note note);
 
-  Future deleteNote();
+  Future deleteNote(int id);
 }

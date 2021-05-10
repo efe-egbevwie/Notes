@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:notes/database/notes.dart';
-
+import 'package:notes/models/sql_note.dart';
 
 class NotesCard extends StatelessWidget {
   const NotesCard({
@@ -31,7 +30,9 @@ class NotesCard extends StatelessWidget {
               DateFormat.yMMMd().format(note.timeCreated),
               style: TextStyle(color: Colors.grey[800]),
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Text(
               note.title,
               style: TextStyle(
@@ -40,14 +41,15 @@ class NotesCard extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Text(
-             note.description,
-             style: TextStyle(
-               color: Colors.black,
-               fontWeight: FontWeight.normal,
-               fontSize: 15
-             ),
+              note.description,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 15),
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
             )

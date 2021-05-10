@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notes/database/notes.dart';
+import 'package:notes/database/firebase_storage.dart';
+import 'package:notes/models/sql_note.dart';
 import 'package:notes/services/sqlite_database_service.dart';
 import 'package:notes/ui/widgets/notesForm.dart';
 
@@ -16,10 +17,11 @@ class EditNoteView extends StatefulWidget {
 }
 
 class _EditNoteViewState extends State<EditNoteView> {
-  var databaseService = locator<SqliteDatabaseService>();
+  var sqlDatabaseService = locator<SqliteDatabaseService>();
+  var firebaseDatabaseService = locator<FirebaseDatabase>();
   final _formKey = GlobalKey<FormState>();
-  String title;
-  String description;
+  String title = '';
+  String description = '';
 
   @override
   void initState() {
@@ -73,7 +75,7 @@ class _EditNoteViewState extends State<EditNoteView> {
       timeCreated: DateTime.now(),
     );
 
-    await databaseService.createNote(note);
+    await firebaseDatabaseService.createNote(note);
   }
 
   Future updateNote() async {
@@ -82,7 +84,7 @@ class _EditNoteViewState extends State<EditNoteView> {
       description: description,
     );
 
-    await databaseService.updateNote(note);
+    await sqlDatabaseService.updateNote(note);
   }
 
   void addOrUpdateNote() async{

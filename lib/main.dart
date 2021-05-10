@@ -9,6 +9,7 @@ import 'package:notes/services/firebase_auth_service.dart';
 import 'package:notes/services/navigation_service.dart';
 import 'package:notes/ui/authenticationWrapper.dart';
 import 'package:notes/ui/router.dart';
+import 'package:notes/viewModels/notes_view_viewModel.dart';
 import 'package:notes/viewModels/sign_in_viewModel.dart';
 import 'package:notes/viewModels/sign_up_viewModel.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => SignUpViewModel()),
         ChangeNotifierProvider(create: (context) => SignInViewModel()),
+        ChangeNotifierProvider(create: (context) => NotesViewViewModel(),)
         ],
       child: StreamProvider<NoteUser>.value(
         value: AuthService().userStateChanges,

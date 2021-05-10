@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:notes/database/notes.dart';
+import 'package:notes/models/sql_note.dart';
 import 'package:notes/services/sqlite_database_service.dart';
 
 import '../service_locator.dart';

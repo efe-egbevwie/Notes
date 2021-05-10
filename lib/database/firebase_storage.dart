@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:notes/services/firebase_auth_service.dart';
 
-import 'notes.dart';
+import '../models/sql_note.dart';
 
 class FirebaseDatabase {
-  FirebaseDatabase({this.uid});
+  FirebaseDatabase();
 
-  final String uid;
+  final String uid = AuthService().getUid();
 
   final CollectionReference notesCollection =
       FirebaseFirestore.instance.collection('notes');
+
 
   Future createNote(Note note) async {
     await notesCollection
@@ -19,7 +21,8 @@ class FirebaseDatabase {
         .catchError((error) => print('create note failed due to $error'));
   }
 
-  Future readNoteSingle(Note note) async {
+
+  Future readNoteSingle(int id) async {
     await notesCollection
         .doc(uid)
         .collection(uid)
@@ -30,6 +33,7 @@ class FirebaseDatabase {
     });
   }
 
+
   Future updateNote(Note note) async {
     await notesCollection
         .doc(uid)
@@ -39,7 +43,8 @@ class FirebaseDatabase {
         .catchError((error) => print('update note failed due to $error'));
   }
 
-  Future deleteNote(Note note) async {
+
+  Future deleteNote(int id) async {
     await notesCollection
         .doc(uid)
         .collection(uid)
@@ -48,15 +53,15 @@ class FirebaseDatabase {
         .catchError((error) => print('delete note failed due to $error'));
   }
 
-  Future<List<Note>> getNotes() async {
-    await notesCollection
-        .doc(uid)
-        .collection(uid)
-        .get()
-        .then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((note) {
-        return Note.fromJson(note.data());
-      });
+  Stream<List<Note>> readNotes() {
+    return notesCollection.doc(uid).collection(uid).snapshots().map((snapshot) {
+      return snapshot.docs
+          .map((note) => Note(
+              id: note.data()['_id'],
+              title: note.data()['title'],
+              description: note.data()['description'],
+              timeCreated: DateTime.parse(note.data()['timeCreated'])))
+          .toList();
     });
   }
 }
