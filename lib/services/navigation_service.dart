@@ -14,4 +14,12 @@ class NavigationService{
     return _navigationKey.currentState.pushReplacementNamed(routeName, arguments: arguments);
   }
 
+  void pop() {
+    return _navigationKey.currentState.pop();
+  }
+  
+  void popUntil() {
+    return _navigationKey.currentState.popUntil((route) => route.isFirst);
+  }
+
 }

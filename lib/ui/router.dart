@@ -29,7 +29,7 @@ class RouteGenerator {
         return _materialPageRoute(
           routeName: settings.name,
           viewToShow: NoteDetailView(
-            noteId: settings.arguments,
+            note: settings.arguments,
           ),
         );
 

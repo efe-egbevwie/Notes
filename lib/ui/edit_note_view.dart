@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:notes/database/firebase_storage.dart';
-import 'package:notes/models/sql_note.dart';
-import 'package:notes/services/sqlite_database_service.dart';
+import 'package:notes/models/note.dart';
 import 'package:notes/ui/widgets/notesForm.dart';
-
+import 'package:notes/viewModels/edit_note_viewModel.dart';
 
 import '../service_locator.dart';
 
@@ -17,89 +15,53 @@ class EditNoteView extends StatefulWidget {
 }
 
 class _EditNoteViewState extends State<EditNoteView> {
-  var sqlDatabaseService = locator<SqliteDatabaseService>();
-  var firebaseDatabaseService = locator<FirebaseDatabase>();
-  final _formKey = GlobalKey<FormState>();
-  String title = '';
-  String description = '';
+  var editNoteViewModel = locator<EditNoteViewModel>();
 
   @override
   void initState() {
     super.initState();
-    title = widget.note?.title ?? '';
-    description = widget.note?.description ?? '';
+    editNoteViewModel.title = widget.note?.title ?? '';
+    editNoteViewModel.description = widget.note?.description ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [saveButton()],
+        actions: [
+          saveButton(() {
+            print(editNoteViewModel.title);
+            editNoteViewModel.addOrUpdateNote(widget.note);
+          })
+        ],
       ),
       body: Form(
-        key: _formKey,
+        key: editNoteViewModel.formKey,
         child: NotesForm(
-          title: title,
-          description: description,
-          onTitleChanged: (title) => setState(() => this.title = title),
-          onDescriptionChanged: (description) => setState(() => this.description = description),
+          title: editNoteViewModel.title,
+          description: editNoteViewModel.description,
+          onTitleChanged: (title) =>
+              setState(() => editNoteViewModel.title = title),
+          onDescriptionChanged: (description) =>
+              setState(() => editNoteViewModel.description = description),
         ),
       ),
     );
   }
 
-  Widget saveButton() {
-    final isFormValid = title.isNotEmpty && description.isNotEmpty;
+  Widget saveButton(Function onPressed) {
+    final isFormValid = editNoteViewModel.title.isNotEmpty && editNoteViewModel.description.isNotEmpty;
 
     return Padding(
       padding: EdgeInsets.all(8),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            onPrimary: Colors.white,
-            primary: isFormValid ? null : Colors.grey
-        ),
-        child: Text('Save'),
-        onPressed: () {
-          print('this is the title: $title');
-          print('this is the description: $description');
-          addOrUpdateNote();
-        },
-      ),
+          style: ElevatedButton.styleFrom(
+              onPrimary: Colors.white,
+              primary: isFormValid ? null : Colors.grey),
+          child: Text('Save'),
+          onPressed: onPressed),
     );
   }
 
-  Future addNote() async {
-    final note = Note(
-      title: title,
-      description: description,
-      timeCreated: DateTime.now(),
-    );
 
-    await firebaseDatabaseService.createNote(note);
-  }
-
-  Future updateNote() async {
-    final note = widget.note?.copyWith(
-      title: title,
-      description: description,
-    );
-
-    await sqlDatabaseService.updateNote(note);
-  }
-
-  void addOrUpdateNote() async{
-    final isNoteValid = _formKey.currentState.validate();
-
-    if(isNoteValid) {
-      final isUpdatingNote = widget.note != null;
-      if(isUpdatingNote) {
-        await updateNote();
-      } else{
-        await addNote();
-      }
-
-      Navigator.of(context).pop();
-    }
-
-  }
 }

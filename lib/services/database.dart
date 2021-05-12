@@ -1,4 +1,4 @@
-import 'package:notes/models/sql_note.dart';
+import 'package:notes/models/note.dart';
 
 abstract class Database{
   Future createNote(Note note);

@@ -1,5 +1,5 @@
 import 'package:notes/database/db.dart';
-import 'package:notes/models/sql_note.dart';
+import 'package:notes/models/note.dart';
 import 'package:notes/services/database.dart';
 
 class SqliteDatabaseService implements Database {

@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' ;
 import 'dart:async';
 import '../constants.dart';
-import '../models/sql_note.dart';
+import '../models/note.dart';
 
 class DB {
   DB._init();

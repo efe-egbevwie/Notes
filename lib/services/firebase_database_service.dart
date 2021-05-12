@@ -1,5 +1,5 @@
 import 'package:notes/database/firebase_storage.dart';
-import 'package:notes/models/sql_note.dart';
+import 'package:notes/models/note.dart';
 import 'package:notes/services/database.dart';
 
 class FirebaseDatabaseService implements Database {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes/database/firebase_storage.dart';
-import 'package:notes/models/sql_note.dart';
+import 'package:notes/models/note.dart';
 import 'package:notes/services/firebase_auth_service.dart';
 import 'package:notes/ui/widgets/notesCard.dart';
 
@@ -23,21 +23,6 @@ class _NotesViewState extends State<NotesView> {
   bool isLoading = false;
   var firebaseDatabase = locator<FirebaseDatabase>();
   var authService = locator<AuthService>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +74,6 @@ class _NotesViewState extends State<NotesView> {
         onPressed: () async {
           await Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => EditNoteView()));
-          //readNotes();
         },
       ),
     );
@@ -110,10 +94,9 @@ class _NotesViewState extends State<NotesView> {
           onTap: () async {
             await Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => NoteDetailView(
-                noteId: note.id,
+                note: note,
               ),
             ));
-            //readNotes();
           },
           child: NotesCard(note: note, index: index),
         );

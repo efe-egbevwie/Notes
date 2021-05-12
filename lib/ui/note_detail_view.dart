@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:notes/models/sql_note.dart';
-import 'package:notes/services/sqlite_database_service.dart';
-
+import 'package:notes/models/note.dart';
+import 'package:notes/services/database.dart';
 import '../service_locator.dart';
 import 'edit_note_view.dart';
 import 'notes_view.dart';
 
 class NoteDetailView extends StatefulWidget {
-  final int noteId;
+  final Note note;
 
   const NoteDetailView({
-    @required this.noteId,
+    @required this.note,
   });
 
   @override
@@ -19,28 +18,9 @@ class NoteDetailView extends StatefulWidget {
 }
 
 class _NoteDetailViewState extends State<NoteDetailView> {
-  Note note;
   bool isLoading = false;
-  var databaseService = locator<SqliteDatabaseService>();
+  var databaseService = locator<Database>();
 
-  @override
-  void initState() {
-    readNote();
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  Future readNote() async {
-    setState(() => isLoading = true);
-
-    this.note = await databaseService.readNoteSingle(widget.noteId);
-
-    setState(() => isLoading = false);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +41,7 @@ class _NoteDetailViewState extends State<NoteDetailView> {
                 padding: EdgeInsets.symmetric(vertical: 8),
                 children: [
                   SelectableText(
-                    note.title,
+                    widget.note.title,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -69,12 +49,12 @@ class _NoteDetailViewState extends State<NoteDetailView> {
                   ),
                   SizedBox(height: 25),
                   Text(
-                    DateFormat.yMMMd().format(note.timeCreated),
+                    DateFormat.yMMMd().format(widget.note.timeCreated),
                     style: TextStyle(color: Colors.black54),
                   ),
                   SizedBox(height: 25),
                   SelectableText(
-                    note.description,
+                    widget.note.description,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.normal,
@@ -92,10 +72,9 @@ class _NoteDetailViewState extends State<NoteDetailView> {
       onPressed: () async {
         await Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => EditNoteView(
-                  note: note,
+                  note: widget.note,
                 )));
 
-        readNote();
       },
     );
   }
@@ -124,7 +103,7 @@ class _NoteDetailViewState extends State<NoteDetailView> {
                   child: Text('No')),
               TextButton(
                   onPressed: () async {
-                    await databaseService.deleteNote(note.id);
+                    await databaseService.deleteNote(widget.note.id);
                     //Navigator.of(context).popUntil((route) => route.isFirst);
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => NotesView()),
