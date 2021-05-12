@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:notes/database/firebase_storage.dart';
+import 'package:notes/database/firebase_database.dart';
 import 'package:notes/services/database.dart';
 import 'package:notes/services/firebase_auth_service.dart';
 import 'package:notes/services/firebase_database_service.dart';

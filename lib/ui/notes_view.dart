@@ -1,6 +1,7 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:notes/database/firebase_storage.dart';
+import 'package:notes/database/firebase_database.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/services/firebase_auth_service.dart';
 import 'package:notes/ui/widgets/notesCard.dart';
@@ -33,7 +34,13 @@ class _NotesViewState extends State<NotesView> {
               icon: Icon(Icons.logout),
               onPressed: () {
                 authService.signOut();
-              })
+              }),
+          IconButton(
+            icon: Icon(Icons.lightbulb),
+            onPressed: () {
+              AdaptiveTheme.of(context).toggleThemeMode();
+            },
+          )
         ],
         title: Center(
           child: Text(
@@ -48,7 +55,7 @@ class _NotesViewState extends State<NotesView> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return CircularProgressIndicator();
+                return CircularProgressIndicator(backgroundColor: Theme.of(context).primaryColor,);
               default:
                 if (snapshot.hasError) {
                   print(snapshot.error);
@@ -69,7 +76,7 @@ class _NotesViewState extends State<NotesView> {
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
-          color: Theme.of(context).accentColor,
+          // color: Theme.of(context).accentColor,
         ),
         onPressed: () async {
           await Navigator.of(context)

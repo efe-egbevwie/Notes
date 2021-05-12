@@ -41,10 +41,9 @@ class _NotesFormState extends State<NotesForm> {
     return TextFormField(
       initialValue: widget.title,
       style: TextStyle(
-          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
+           fontWeight: FontWeight.bold, fontSize: 25),
       decoration: InputDecoration(
         hintText: 'Title',
-        hintStyle: TextStyle(color: Colors.black),
         border: InputBorder.none,
       ),
       validator: (val) => val.isEmpty && val == null ? 'Enter a title' : null,
@@ -56,10 +55,9 @@ class _NotesFormState extends State<NotesForm> {
   Widget descriptionWidget() {
     return TextFormField(
       initialValue: widget.description,
-      style: TextStyle(color: Colors.black, fontSize: 18, ),
+      style: TextStyle(fontSize: 18 ),
       decoration: InputDecoration(
           hintText: 'Description',
-          hintStyle: TextStyle(color: Colors.black),
           border: InputBorder.none),
       validator: (val) =>
           val.isEmpty && val == null ? 'Enter a description' : null,

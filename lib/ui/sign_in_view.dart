@@ -33,6 +33,7 @@ class _SignInVIewState extends State<SignInVIew> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       body: Center(
         child: Container(
           height: size.height * 0.6,
@@ -61,12 +62,20 @@ class _SignInVIewState extends State<SignInVIew> {
                         ),
                         SizedBox(height: 20),
                         TextFormField(
+                          style: TextStyle(color: Theme.of(context).hintColor),
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.mail),
                             hintText: 'Email',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(29)),
+                            enabled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(29)
+                            ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(29)),
+
                           ),
+
                           validator: (val) =>
                               val.isEmpty ? 'Please enter an email' : null,
                           controller: emailController,
@@ -75,7 +84,12 @@ class _SignInVIewState extends State<SignInVIew> {
                           height: 20,
                         ),
                         TextFormField(
+                          style: TextStyle(color: Theme.of(context).hintColor),
                           decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(29)
+                            ),
+                              enabled: true,
                               prefixIcon: Icon(Icons.lock),
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.visibility_sharp),

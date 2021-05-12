@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/services/database.dart';
+
 import '../service_locator.dart';
 import 'edit_note_view.dart';
 import 'notes_view.dart';
@@ -20,7 +21,6 @@ class NoteDetailView extends StatefulWidget {
 class _NoteDetailViewState extends State<NoteDetailView> {
   bool isLoading = false;
   var databaseService = locator<Database>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,23 +42,17 @@ class _NoteDetailViewState extends State<NoteDetailView> {
                 children: [
                   SelectableText(
                     widget.note.title,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   ),
                   SizedBox(height: 25),
                   Text(
                     DateFormat.yMMMd().format(widget.note.timeCreated),
-                    style: TextStyle(color: Colors.black54),
                   ),
                   SizedBox(height: 25),
                   SelectableText(
                     widget.note.description,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 18),
+                    style:
+                        TextStyle(fontWeight: FontWeight.normal, fontSize: 18),
                   )
                 ],
               ),
@@ -74,7 +68,6 @@ class _NoteDetailViewState extends State<NoteDetailView> {
             builder: (context) => EditNoteView(
                   note: widget.note,
                 )));
-
       },
     );
   }

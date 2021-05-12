@@ -4,10 +4,10 @@ import 'dart:async';
 import '../constants.dart';
 import '../models/note.dart';
 
-class DB {
-  DB._init();
+class SqliteDatabase {
+  SqliteDatabase._init();
 
-  static final DB instance = DB._init();
+  static final SqliteDatabase instance = SqliteDatabase._init();
 
   static Database _database;
 

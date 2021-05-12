@@ -33,6 +33,7 @@ class _SignUpViewState extends State<SignUpView> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       body: Center(
         child: Container(
           height: size.height * 0.6,
@@ -61,9 +62,14 @@ class _SignUpViewState extends State<SignUpView> {
                         ),
                         SizedBox(height: 20),
                         TextFormField(
+                          style: TextStyle(color: Theme.of(context).hintColor),
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.mail),
                             hintText: 'Email',
+                            enabled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(29)
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(29)),
                           ),
@@ -75,7 +81,12 @@ class _SignUpViewState extends State<SignUpView> {
                           height: 20,
                         ),
                         TextFormField(
+                          style: TextStyle(color: Theme.of(context).hintColor),
                           decoration: InputDecoration(
+                            enabled: true,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(29)
+                              ),
                               prefixIcon: Icon(Icons.lock),
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.visibility_sharp),

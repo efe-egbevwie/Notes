@@ -1,4 +1,4 @@
-import 'package:notes/database/firebase_storage.dart';
+import 'package:notes/database/firebase_database.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/services/database.dart';
 

@@ -18,8 +18,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseFirestore.instance.settings =
-      Settings(persistenceEnabled: false);
+  FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
   setUpLocator();
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
   runApp(MyApp(
@@ -28,7 +27,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  AdaptiveThemeMode savedThemeMode = AdaptiveThemeMode.dark;
+  AdaptiveThemeMode savedThemeMode = AdaptiveThemeMode.system;
 
   MyApp({Key key, this.savedThemeMode}) : super(key: key);
 
@@ -44,28 +43,41 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => SignUpViewModel()),
         ChangeNotifierProvider(create: (context) => SignInViewModel()),
-        ChangeNotifierProvider(create: (context) => NotesViewViewModel(),)
-        ],
+        ChangeNotifierProvider(
+          create: (context) => NotesViewViewModel(),
+        )
+      ],
       child: StreamProvider<NoteUser>.value(
         value: AuthService().userStateChanges,
         initialData: null,
         child: AdaptiveTheme(
           light: ThemeData(
-              scaffoldBackgroundColor: Colors.blue,
+              // scaffoldBackgroundColor: Colors.blue,
               brightness: Brightness.light,
               primarySwatch: Colors.blue,
               accentColor: Colors.white,
               floatingActionButtonTheme: FloatingActionButtonThemeData(
                 backgroundColor: Theme.of(context).primaryColor,
+                foregroundColor: Colors.white,
               ),
               iconTheme: IconThemeData(
                 color: Colors.white,
-              )),
+              ),
+              textTheme: Theme.of(context).textTheme.apply(
+                    displayColor: Colors.black,
+                    bodyColor: Colors.black,
+                  )),
           dark: ThemeData(
-            brightness: Brightness.dark,
-            primaryColor: Colors.grey[700],
-            scaffoldBackgroundColor: Colors.black,
-          ),
+              brightness: Brightness.dark,
+              primaryColor: Colors.grey[800],
+              accentColor: Colors.purple,
+              hintColor: Colors.purple,
+              textTheme: Theme.of(context).textTheme.apply(
+                    displayColor: Colors.white,
+                    bodyColor: Colors.white,
+                  ),
+              iconTheme: IconThemeData(color: Theme.of(context).accentColor)),
+
           initial: widget.savedThemeMode ?? AdaptiveThemeMode.light,
           builder: (theme, darkTheme) => GetMaterialApp(
             title: 'Notes',
@@ -73,7 +85,6 @@ class _MyAppState extends State<MyApp> {
             navigatorKey: locator<NavigationService>().navigationKey,
             onGenerateRoute: RouteGenerator.generateRoute,
             darkTheme: darkTheme,
-            themeMode: ThemeMode.system,
             debugShowCheckedModeBanner: false,
             home: AuthenticationWrapper(),
           ),
