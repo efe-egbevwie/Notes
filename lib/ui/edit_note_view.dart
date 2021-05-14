@@ -30,7 +30,6 @@ class _EditNoteViewState extends State<EditNoteView> {
       appBar: AppBar(
         actions: [
           saveButton(() {
-            print(editNoteViewModel.title);
             editNoteViewModel.addOrUpdateNote(widget.note);
           })
         ],

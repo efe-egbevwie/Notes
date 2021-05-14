@@ -26,7 +26,8 @@ class EditNoteViewModel extends BaseModel {
   }
 
   Future updateNote(Note note) async {
-    final note = Note(
+     note = Note(
+       id: note.id,
       title: title,
       description: description,
     );
