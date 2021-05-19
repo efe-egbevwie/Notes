@@ -11,9 +11,9 @@ import 'edit_note_view.dart';
 import 'note_detail_view.dart';
 
 class NotesView extends StatefulWidget {
-  bool isNoteDeleted = false;
-
-  NotesView({this.isNoteDeleted});
+  NotesView({
+    Key key,
+  }) : super(key: key);
 
   @override
   _NotesViewState createState() => _NotesViewState();
@@ -32,8 +32,8 @@ class _NotesViewState extends State<NotesView> {
         actions: [
           IconButton(
               icon: Icon(Icons.logout),
-              onPressed: () {
-                authService.signOut();
+              onPressed: () async {
+                await authService.signOut();
               }),
           IconButton(
             icon: Icon(Icons.lightbulb),
@@ -55,7 +55,9 @@ class _NotesViewState extends State<NotesView> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return CircularProgressIndicator(backgroundColor: Theme.of(context).primaryColor,);
+                return CircularProgressIndicator(
+                  backgroundColor: Theme.of(context).primaryColor,
+                );
               default:
                 if (snapshot.hasError) {
                   print(snapshot.error);

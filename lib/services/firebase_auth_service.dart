@@ -3,9 +3,13 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:notes/models/user.dart';
+import 'package:notes/services/shared_prefs.dart';
+
+import '../service_locator.dart';
 
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  SharedPrefs _prefs = locator<SharedPrefs>();
 
   String authErrorMessage;
 
@@ -14,6 +18,7 @@ class AuthService extends ChangeNotifier {
     try {
       UserCredential user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      _prefs.setSignedIn();
       return user;
     } on FirebaseAuthException catch (e) {
       print(e.code);
@@ -39,6 +44,7 @@ class AuthService extends ChangeNotifier {
     try {
       UserCredential user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+      _prefs.setSignedIn();
       return user;
     } on FirebaseAuthException catch (e) {
       print(e.code);
@@ -64,6 +70,7 @@ class AuthService extends ChangeNotifier {
   Future signOut() async {
     try {
       await _auth.signOut();
+      _prefs.setSignedOut();
     } on FirebaseAuthException catch (e) {
       print(e.toString);
       return null;

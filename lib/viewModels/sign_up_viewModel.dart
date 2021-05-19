@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notes/constants.dart';
 import 'package:notes/services/firebase_auth_service.dart';
 import 'package:notes/services/navigation_service.dart';
 
@@ -24,14 +23,23 @@ class SignUpViewModel extends BaseModel {
     );
     setLoading(false);
 
-    if (result != null) {
-      _navigationService.pushReplacement(RouteNames.notesView);
-    } else {
+    if (result == null) {
       _showErrorSnackBar(_auth.authErrorMessage);
     }
+
+    // if (result != null) {
+    //   _navigationService.pushReplacement(RouteNames.notesView);
+    // } else {
+    //   _showErrorSnackBar(_auth.authErrorMessage);
+    // }
   }
 
   void _showErrorSnackBar(String message) {
-    Get.snackbar('Error', message, backgroundColor: Colors.red);
+    Get.snackbar(
+      'Error',
+      message,
+      backgroundColor: Colors.red,
+      colorText: Colors.white
+    );
   }
 }

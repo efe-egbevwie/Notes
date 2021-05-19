@@ -55,6 +55,9 @@ dependencies:
   #state management and navigation/dependencies management
   get: ^4.1.4
 
+  # reactively listen to sharedprefs value. used in this project for authentication state
+  streaming_shared_preferences: ^2.0.0
+
 
 
 

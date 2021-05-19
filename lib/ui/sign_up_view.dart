@@ -109,9 +109,7 @@ class _SignUpViewState extends State<SignUpView> {
                           height: 30,
                         ),
                         signUpViewModel.isLoading
-                            ? CircularProgressIndicator(
-                                backgroundColor: Colors.blue,
-                              )
+                            ? CircularProgressIndicator()
                             : ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     primary: Theme.of(context).primaryColor,

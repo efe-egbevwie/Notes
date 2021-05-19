@@ -25,21 +25,19 @@ class SignInViewModel extends BaseModel {
     );
     setLoading(false);
 
-    if (result != null) {
-      _navigationService.pushReplacement(RouteNames.notesView);
-    } else{
+    if (result == null) {
       _showErrorSnackBar(_auth.authErrorMessage);
 
-
     }
+
   }
 
   void _showErrorSnackBar(String message) {
     Get.snackbar(
       'Error',
       message,
-      backgroundColor: Colors.red
-
+      backgroundColor: Colors.red,
+      colorText: Colors.white
     );
   }
 
