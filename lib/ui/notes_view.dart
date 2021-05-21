@@ -25,18 +25,35 @@ class _NotesViewState extends State<NotesView> {
   var authService = locator<AuthService>();
   var navigationService = locator<NavigationService>();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountEmail: Text(AuthService.userDetails()),
+              currentAccountPicture: CircleAvatar(
+                child: Text(
+                  AuthService.userDetails()[0],
+                  style: TextStyle(fontSize: 60),
+                ),
+              ),
+            ),
+            ListTile(
+                onTap: () {},
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Sign Out'),
+              onTap: () async => await authService.signOut(),
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         actions: [
-          IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () async {
-                await authService.signOut();
-              }),
           IconButton(
             icon: Icon(Icons.lightbulb),
             onPressed: () {

@@ -92,4 +92,11 @@ class AuthService extends ChangeNotifier {
     final uid = user.uid;
     return uid;
   }
+
+  static String userDetails() {
+    final User user = FirebaseAuth.instance.currentUser;
+    final noteUser = user.email;
+    return noteUser;
+  }
+
 }
