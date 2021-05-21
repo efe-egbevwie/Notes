@@ -8,7 +8,6 @@ import 'package:notes/service_locator.dart';
 import 'package:notes/services/auth_state.dart';
 import 'package:notes/services/firebase_auth_service.dart';
 import 'package:notes/services/navigation_service.dart';
-import 'package:notes/services/shared_prefs.dart';
 import 'package:notes/ui/authenticationWrapper.dart';
 import 'package:notes/ui/router.dart';
 import 'package:notes/viewModels/notes_view_viewModel.dart';
@@ -23,7 +22,9 @@ void main() async {
   StreamingSharedPreferences _prefs = await StreamingSharedPreferences.instance;
   final authState = AuthState(_prefs);
   await Firebase.initializeApp();
-  FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
+  FirebaseFirestore.instance.settings = Settings(
+    persistenceEnabled: false,
+  );
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
   runApp(MyApp(
     savedThemeMode: savedThemeMode,
@@ -34,7 +35,6 @@ void main() async {
 class MyApp extends StatefulWidget {
   AdaptiveThemeMode savedThemeMode = AdaptiveThemeMode.system;
   final AuthState authState;
-  SharedPrefs _prefs = locator<SharedPrefs>();
 
   MyApp({Key key, this.savedThemeMode, this.authState}) : super(key: key);
 
@@ -50,9 +50,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => SignUpViewModel()),
         ChangeNotifierProvider(create: (context) => SignInViewModel()),
-        ChangeNotifierProvider(
-          create: (context) => NotesViewViewModel(),
-        )
+        ChangeNotifierProvider(create: (context) => NotesViewViewModel())
       ],
       child: PreferenceBuilder<bool>(
         preference: widget.authState.authState,
@@ -92,7 +90,10 @@ class _MyAppState extends State<MyApp> {
               onGenerateRoute: RouteGenerator.generateRoute,
               darkTheme: darkTheme,
               debugShowCheckedModeBanner: false,
-              home: AuthenticationWrapper(widget.authState),
+              home: AuthenticationWrapper(
+                authState: widget.authState,
+                key: UniqueKey(),
+              ),
             ),
           );
         },

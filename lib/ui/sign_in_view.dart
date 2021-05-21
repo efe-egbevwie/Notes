@@ -112,7 +112,7 @@ class _SignInVIewState extends State<SignInVIew> {
                           height: 30,
                         ),
                         signInViewModel.isLoading
-                            ? CircularProgressIndicator()
+                            ? CircularProgressIndicator(backgroundColor: Theme.of(context).primaryColor,)
                             : ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     primary: Theme.of(context).primaryColor,

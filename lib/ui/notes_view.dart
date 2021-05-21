@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes/database/firebase_database.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/services/firebase_auth_service.dart';
+import 'package:notes/services/navigation_service.dart';
 import 'package:notes/ui/widgets/notesCard.dart';
 
 import '../service_locator.dart';
@@ -20,10 +21,11 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
-  List<Note> notes;
-  bool isLoading = false;
   var firebaseDatabase = locator<FirebaseDatabase>();
   var authService = locator<AuthService>();
+  var navigationService = locator<NavigationService>();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +58,7 @@ class _NotesViewState extends State<NotesView> {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 return CircularProgressIndicator(
-                  backgroundColor: Theme.of(context).primaryColor,
-                );
+                    backgroundColor: Theme.of(context).primaryColor);
               default:
                 if (snapshot.hasError) {
                   print(snapshot.error);
@@ -88,7 +89,9 @@ class _NotesViewState extends State<NotesView> {
     );
   }
 
-  Widget showNotes(List<Note> notes) {
+  Widget showNotes(
+    List<Note> notes,
+  ) {
     return StaggeredGridView.countBuilder(
       crossAxisCount: 4,
       crossAxisSpacing: 4,
@@ -107,7 +110,11 @@ class _NotesViewState extends State<NotesView> {
               ),
             ));
           },
-          child: NotesCard(note: note, index: index),
+          child: NotesCard(
+            note: note,
+            index: index,
+            key: UniqueKey(),
+          ),
         );
       },
     );

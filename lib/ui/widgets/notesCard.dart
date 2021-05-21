@@ -7,10 +7,12 @@ class NotesCard extends StatelessWidget {
     Key key,
     @required this.note,
     @required this.index,
-  });
+  }):super(key: key);
 
   final Note note;
   final int index;
+
+
 
   @override
   Widget build(BuildContext context) {

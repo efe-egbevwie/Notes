@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:notes/database/firebase_database.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/services/database.dart';
 import 'package:notes/services/navigation_service.dart';
@@ -9,7 +10,7 @@ import '../service_locator.dart';
 class EditNoteViewModel extends BaseModel {
   final formKey = GlobalKey<FormState>();
 
-  var _firebaseDatabaseService = locator<Database>();
+  var _firebaseDatabaseService = locator<FirebaseDatabase>();
   var _navigationService = locator<NavigationService>();
 
   String title = '';

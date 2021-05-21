@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:notes/database/firebase_database.dart';
 import 'package:notes/models/note.dart';
-import 'package:notes/services/database.dart';
+import 'package:notes/services/firebase_database_service.dart';
 
 import '../service_locator.dart';
 import 'edit_note_view.dart';
@@ -20,7 +21,7 @@ class NoteDetailView extends StatefulWidget {
 
 class _NoteDetailViewState extends State<NoteDetailView> {
   bool isLoading = false;
-  var databaseService = locator<Database>();
+  var databaseService = locator<FirebaseDatabase>();
 
   @override
   Widget build(BuildContext context) {

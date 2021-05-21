@@ -6,15 +6,15 @@ import '../models/note.dart';
 class FirebaseDatabase {
   FirebaseDatabase();
 
-  final String uid = AuthService().getUid();
+
 
   final CollectionReference notesCollection =
       FirebaseFirestore.instance.collection('notes');
 
   Future createNote(Note note) async {
     await notesCollection
-        .doc(uid)
-        .collection(uid)
+        .doc(AuthService.getUid())
+        .collection(AuthService.getUid())
         .doc()
         .set(note.toJson())
         .catchError((error) => print('create note failed due to $error'));
@@ -22,8 +22,8 @@ class FirebaseDatabase {
 
   Future readNoteSingle(int id) async {
     await notesCollection
-        .doc(uid)
-        .collection(uid)
+        .doc(AuthService.getUid())
+        .collection(AuthService.getUid())
         .doc()
         .get()
         .then((DocumentSnapshot snapshot) {
@@ -33,8 +33,8 @@ class FirebaseDatabase {
 
   Future updateNote(Note note) async {
     await notesCollection
-        .doc(uid)
-        .collection(uid)
+        .doc(AuthService.getUid())
+        .collection(AuthService.getUid())
         .where('_id', isEqualTo: note.id)
         .get()
         .then((querySnapshot) {
@@ -51,8 +51,8 @@ class FirebaseDatabase {
 
   Future deleteNote(int id) async {
     await notesCollection
-        .doc(uid)
-        .collection(uid)
+        .doc(AuthService.getUid())
+        .collection(AuthService.getUid())
         .where('_id', isEqualTo: id)
         .get()
         .then((note) => note.docs.first.reference.delete())
@@ -61,8 +61,8 @@ class FirebaseDatabase {
 
   Stream<List<Note>> readNotes() {
     return notesCollection
-        .doc(uid)
-        .collection(uid)
+        .doc(AuthService.getUid())
+        .collection(AuthService.getUid())
         .orderBy('timeCreated', descending: true)
         .snapshots()
         .map((snapshot) {

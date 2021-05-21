@@ -87,8 +87,8 @@ class AuthService extends ChangeNotifier {
     return user != null ? NoteUser(uid: user.uid) : null;
   }
 
-   String getUid() {
-    final User user = _auth.currentUser;
+   static String getUid() {
+    final User user = FirebaseAuth.instance.currentUser;
     final uid = user.uid;
     return uid;
   }

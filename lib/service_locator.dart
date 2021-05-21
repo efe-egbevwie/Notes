@@ -13,8 +13,8 @@ GetIt locator = GetIt.instance;
 const bool USE_FIREBASE_DATABASE = true;
 
 void setUpLocator() async{
-  locator.registerLazySingleton<Database>(() =>
-      USE_FIREBASE_DATABASE ? FirebaseDatabaseService() : SqliteDatabaseService());
+  // locator.registerLazySingleton<Database>(() =>
+  //     USE_FIREBASE_DATABASE ? FirebaseDatabaseService() : SqliteDatabaseService());
   locator.registerLazySingleton<FirebaseDatabase>(() => FirebaseDatabase());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => NavigationService());
