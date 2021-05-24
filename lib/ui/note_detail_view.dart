@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:notes/database/firebase_database.dart';
 import 'package:notes/models/note.dart';
-import 'package:notes/services/firebase_database_service.dart';
+
 
 import '../service_locator.dart';
 import 'edit_note_view.dart';

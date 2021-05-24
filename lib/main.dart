@@ -22,9 +22,7 @@ void main() async {
   StreamingSharedPreferences _prefs = await StreamingSharedPreferences.instance;
   final authState = AuthState(_prefs);
   await Firebase.initializeApp();
-  FirebaseFirestore.instance.settings = Settings(
-    persistenceEnabled: false,
-  );
+  FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
   runApp(MyApp(
     savedThemeMode: savedThemeMode,
@@ -57,7 +55,6 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           return AdaptiveTheme(
             light: ThemeData(
-                // scaffoldBackgroundColor: Colors.blue,
                 brightness: Brightness.light,
                 primarySwatch: Colors.blue,
                 accentColor: Colors.white,

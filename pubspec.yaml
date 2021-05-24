@@ -57,6 +57,7 @@ dependencies:
 
   # reactively listen to sharedprefs value. used in this project for authentication state
   streaming_shared_preferences: ^2.0.0
+  settings_ui: ^1.0.0
 
 
 
