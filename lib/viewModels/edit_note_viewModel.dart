@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:notes/database/firebase_database.dart';
 import 'package:notes/models/note.dart';
-import 'package:notes/services/database.dart';
 import 'package:notes/services/navigation_service.dart';
 import 'package:notes/viewModels/base_model.dart';
 
@@ -16,35 +15,35 @@ class EditNoteViewModel extends BaseModel {
   String title = '';
   String description = '';
 
-  Future addNote() async {
+  Future addNote()  {
     final note = Note(
       title: title,
       description: description,
       timeCreated: DateTime.now(),
     );
 
-    await _firebaseDatabaseService.createNote(note);
+    return _firebaseDatabaseService.createNote(note);
   }
 
-  Future updateNote(Note note) async {
+  Future updateNote(Note note)  {
      note = Note(
        id: note.id,
       title: title,
       description: description,
     );
 
-    await _firebaseDatabaseService.updateNote(note);
+    return _firebaseDatabaseService.updateNote(note);
   }
 
-  void addOrUpdateNote(Note note) async {
+  void addOrUpdateNote(Note note)  {
     final isNoteValid = formKey.currentState.validate();
 
     if (isNoteValid) {
       final isUpdatingNote = note != null;
       if (isUpdatingNote) {
-        await updateNote(note);
+         updateNote(note);
       } else {
-        await addNote();
+         addNote();
       }
 
       _navigationService.popUntil();

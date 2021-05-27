@@ -11,8 +11,8 @@ class FirebaseDatabase {
   final CollectionReference notesCollection =
       FirebaseFirestore.instance.collection('notes');
 
-  Future createNote(Note note) async {
-    await notesCollection
+  Future createNote(Note note)  {
+     return notesCollection
         .doc(AuthService.getUid())
         .collection(AuthService.getUid())
         .doc()
@@ -31,8 +31,8 @@ class FirebaseDatabase {
     });
   }
 
-  Future updateNote(Note note) async {
-    await notesCollection
+  Future updateNote(Note note)  {
+    return notesCollection
         .doc(AuthService.getUid())
         .collection(AuthService.getUid())
         .where('_id', isEqualTo: note.id)
@@ -49,8 +49,8 @@ class FirebaseDatabase {
     }).catchError((error) => print('update note failed due to $error'));
   }
 
-  Future deleteNote(int id) async {
-    await notesCollection
+  Future deleteNote(int id)  {
+    return notesCollection
         .doc(AuthService.getUid())
         .collection(AuthService.getUid())
         .where('_id', isEqualTo: id)

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:notes/database/firebase_database.dart';
 import 'package:notes/models/note.dart';
-
+import 'package:notes/services/navigation_service.dart';
 
 import '../service_locator.dart';
 import 'edit_note_view.dart';
-import 'notes_view.dart';
+
 
 class NoteDetailView extends StatefulWidget {
   final Note note;
@@ -22,6 +22,7 @@ class NoteDetailView extends StatefulWidget {
 class _NoteDetailViewState extends State<NoteDetailView> {
   bool isLoading = false;
   var databaseService = locator<FirebaseDatabase>();
+  NavigationService _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +65,8 @@ class _NoteDetailViewState extends State<NoteDetailView> {
   Widget editButton() {
     return IconButton(
       icon: Icon(Icons.edit),
-      onPressed: () async {
-        await Navigator.of(context).push(MaterialPageRoute(
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => EditNoteView(
                   note: widget.note,
                 )));
@@ -96,14 +97,12 @@ class _NoteDetailViewState extends State<NoteDetailView> {
                   },
                   child: Text('No')),
               TextButton(
-                  onPressed: () async {
-                    await databaseService.deleteNote(widget.note.id);
-                    //Navigator.of(context).popUntil((route) => route.isFirst);
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => NotesView()),
-                        (route) => false);
-                  },
-                  child: Text('Yes')),
+                child: Text('Yes'),
+                onPressed: () {
+                  databaseService.deleteNote(widget.note.id);
+                  _navigationService.popUntil();
+                },
+              ),
             ],
           );
         });

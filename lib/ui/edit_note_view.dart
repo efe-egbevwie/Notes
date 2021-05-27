@@ -29,9 +29,13 @@ class _EditNoteViewState extends State<EditNoteView> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          saveButton(() {
-            editNoteViewModel.addOrUpdateNote(widget.note);
-          })
+          IconButton(
+            icon: Icon(Icons.save_outlined),
+            onPressed: () {
+              editNoteViewModel.addOrUpdateNote(widget.note);
+            },
+            iconSize: 30,
+          ),
         ],
       ),
       body: Form(
@@ -47,20 +51,5 @@ class _EditNoteViewState extends State<EditNoteView> {
       ),
     );
   }
-
-  Widget saveButton(Function onPressed) {
-    final isFormValid = editNoteViewModel.title.isNotEmpty && editNoteViewModel.description.isNotEmpty;
-
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              onPrimary: Colors.white,
-              primary: isFormValid ? null : Colors.grey),
-          child: Text('Save'),
-          onPressed: onPressed),
-    );
-  }
-
 
 }
