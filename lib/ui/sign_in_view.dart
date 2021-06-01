@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:notes/constants.dart';
 import 'package:notes/services/navigation_service.dart';
+import 'package:notes/ui/widgets/custom_text_field.dart';
+import 'package:notes/ui/widgets/roundButton.dart';
 import 'package:notes/viewModels/sign_in_viewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +38,7 @@ class _SignInVIewState extends State<SignInVIew> {
       backgroundColor: Theme.of(context).primaryColor,
       body: Center(
         child: Container(
-          height: size.height * 0.6,
+          height: size.height * 0.7,
           margin: EdgeInsets.only(left: 20, right: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -56,70 +58,46 @@ class _SignInVIewState extends State<SignInVIew> {
                       children: [
                         Text(
                           'Sign in',
-                          style: TextStyle(
-                              fontSize: 23,
-                              color: Theme.of(context).primaryColor),
+                          style: TextStyle(fontSize: 35, color: Theme.of(context).primaryColor),
                         ),
                         SizedBox(height: 20),
-                        TextFormField(
-                          style: TextStyle(color: Theme.of(context).hintColor),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.mail),
-                            hintText: 'Email',
-                            enabled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                                borderRadius: BorderRadius.circular(29)
-                            ),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(29)),
-
-                          ),
-
-                          validator: (val) =>
-                              val.isEmpty ? 'Please enter an email' : null,
+                        CustomTextField(
+                          prefixIcon: Icon(Icons.mail),
+                          hintText: 'Email',
+                          textColor: Colors.black,
+                          borderColor: Theme.of(context).primaryColor,
+                          validator: (val) => val.isEmpty ? 'Please enter an email' : null,
                           controller: emailController,
+                          textCapitalization: TextCapitalization.none,
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          style: TextStyle(color: Theme.of(context).hintColor),
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(29)
-                            ),
-                              enabled: true,
-                              prefixIcon: Icon(Icons.lock),
-                              suffixIcon: IconButton(
-                                icon: Icon(Icons.visibility_sharp),
-                                onPressed: () {
-                                  setState(() {
-                                    obscurePassword = !obscurePassword;
-                                  });
-                                },
-                              ),
-                              hintText: 'Password',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(29))),
+                        SizedBox(height: 20),
+                        CustomTextField(
+                          hintText: 'Password',
+                          textColor: Colors.black,
                           obscureText: obscurePassword,
-                          validator: (val) => val.length < 6
-                              ? 'Please input a password with 6 or more characters'
-                              : null,
+                          prefixIcon: Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.visibility_sharp),
+                            onPressed: () {
+                              setState(() {
+                                obscurePassword = !obscurePassword;
+                              });
+                            },
+                          ),
+                          borderColor: Theme.of(context).primaryColor,
+                          validator: (val) =>
+                              val.length < 6 ? 'Please input a password with 6 or more characters' : null,
                           controller: passwordController,
+                          textCapitalization: TextCapitalization.none,
                         ),
-                        SizedBox(
-                          height: 30,
-                        ),
+                        SizedBox(height: 30),
                         signInViewModel.isLoading
-                            ? CircularProgressIndicator(backgroundColor: Theme.of(context).primaryColor,)
-                            : ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Theme.of(context).primaryColor,
-                                    minimumSize: Size(size.width * 0.8, 50),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30))),
+                            ? CircularProgressIndicator(backgroundColor: Theme.of(context).primaryColor)
+                            : CustomRoundButton(
+                                buttonText: 'Sign in',
+                                size: Size(size.width * 0.8, 50),
+                                buttonColor: Theme.of(context).primaryColor,
+                                borderColor: Theme.of(context).primaryColor,
                                 onPressed: () {
                                   if (_formKey.currentState.validate()) {
                                     FocusScope.of(context).unfocus();
@@ -130,30 +108,17 @@ class _SignInVIewState extends State<SignInVIew> {
                                     );
                                   }
                                 },
-                                child: Text('Sign in'),
                               ),
                         SizedBox(height: 12),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).accentColor,
-                            minimumSize: Size(size.width * 0.5, 50.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                            side: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
+                        CustomRoundButton(
+                          buttonText: 'Sign up',
+                          size: Size(size.width * 0.5, 50),
+                          buttonColor: Theme.of(context).accentColor,
+                          borderColor: Theme.of(context).accentColor,
                           onPressed: () {
-                            _navigationService
-                                .pushReplacement(RouteNames.signUpView);
+                            _navigationService.pushReplacement(RouteNames.signUpView);
                           },
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        )
+                        ),
                       ],
                     ),
                   )

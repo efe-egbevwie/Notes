@@ -1,41 +1,40 @@
 import 'package:flutter/material.dart';
 
-class RoundButton extends StatelessWidget {
+class CustomRoundButton extends StatefulWidget {
+  const CustomRoundButton({
+    Key key,
+    this.buttonText,
+    this.buttonTextColor,
+    this.buttonColor,
+    this.borderColor,
+    this.size,
+    this.onPressed,
+  }) : super(key: key);
   final String buttonText;
+  final Color buttonTextColor;
+  final Color buttonColor;
+  final Color borderColor;
+  final Size size;
   final Function onPressed;
-  final Color buttonColor, textColor;
-
-  const RoundButton(
-      {Key key,
-      this.buttonText,
-      this.onPressed,
-      this.buttonColor,
-      this.textColor})
-      : super(key: key);
 
   @override
+  _CustomRoundButtonState createState() => _CustomRoundButtonState();
+}
+
+class _CustomRoundButtonState extends State<CustomRoundButton> {
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 4),
-    width: size.width * 0.8,
-      height: size.height * 0.08,
-
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(29),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: buttonColor,
-            side: BorderSide(color: Theme.of(context).primaryColor,  )
-
-          ),
-          onPressed: onPressed,
-          child: Text(
-            buttonText,
-            style: TextStyle(color: textColor),
-          ),
-        ),
+    return ElevatedButton(
+      child: Text(
+        widget.buttonText,
+        style: TextStyle(color: widget.buttonTextColor),
       ),
+      style: ElevatedButton.styleFrom(
+          primary: widget.buttonColor,
+          minimumSize: widget.size,
+          side: BorderSide(color: widget.borderColor, width: 2),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
+      onPressed: widget.onPressed,
     );
   }
 }
